@@ -195,3 +195,29 @@ running stack. No manual steps.
 - `SEED_PASSWORD` (default `Seed!Passw0rd`) seeds all users from RF-05.
 - The Playwright suite runs with `npx playwright test` from the repo
   root against the running stack.
+- Fixed local ports: PostgreSQL 5432, backend http://localhost:3000,
+  frontend http://localhost:8080.
+- Database defaults for local compose: `POSTGRES_USER=medapp`,
+  `POSTGRES_PASSWORD=medapp`, `POSTGRES_DB=medapp`.
+- The backend-served OAuth authorization login form (EP-01) uses
+  `input[name="email"]`, `input[name="password"]` and a submit button
+  (standard HTML form) so the flow is automatable end-to-end.
+
+## Testability contract
+
+The SPA exposes these stable `data-testid` attributes (the E2E suite
+depends on them; they are part of the fixed spec like the stack):
+
+- Auth (SCR-01): `login-email`, `login-password`, `login-submit`
+- Navigation (visible per role, RF-20): `nav-bookings`, `nav-search`,
+  `nav-agenda`, `nav-history`, `nav-admin`, `nav-audit`
+- Availability search (SCR-03): `search-professional`, `search-from`,
+  `search-to`, `search-submit`
+- Booking: `slot-item` (one per available slot, with
+  `data-slot-start` attribute), `book-submit`
+- Appointments list: `appointment-item` (with `data-appointment-id`)
+- Cancel: `cancel-appointment`
+- Encounter (SCR-05): `encounter-notes`, `encounter-diagnosis`,
+  `encounter-submit`
+- History (SCR-06): `history-timeline`
+- States (RF-24): `loading-indicator`, `error-banner`, `empty-state`
